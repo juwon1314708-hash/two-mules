@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>노새 두 마리 - 문학과 나의 삶 연결하여 연설하기</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #222; font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; color: #222; }
+  body { overflow: hidden; }
+
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide {
+    display: none;
+    width: min(100vw, 177.7778vh);
+    height: min(56.25vw, 100vh);
+    aspect-ratio: 16 / 9;
+    background: #f7f3ea;
+    position: relative;
+    padding: 6.5% 7%;
+    overflow: hidden;
+  }
+  .slide.active { display: block; }
+
+  .top-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: #6e4f3a;
+  }
+
+  .page {
+    position: absolute;
+    right: 4%;
+    bottom: 3.5%;
+    font-size: 15px;
+    color: #806f63;
+  }
+
+  h1 {
+    font-size: clamp(32px, 5vw, 62px);
+    margin: 0 0 18px;
+    line-height: 1.15;
+    color: #493328;
+  }
+
+  h2 {
+    font-size: clamp(26px, 3.5vw, 45px);
+    margin: 0 0 30px;
+    color: #493328;
+  }
+
+  .subtitle {
+    font-size: clamp(18px, 2vw, 28px);
+    color: #806f63;
+    margin-top: 16px;
+  }
+
+  .content {
+    font-size: clamp(17px, 1.8vw, 27px);
+    line-height: 1.65;
+  }
+
+  .keyword {
+    color: #6e4f3a;
+    font-weight: 800;
+  }
+
+  .quote {
+    margin-top: 25px;
+    padding: 22px 28px;
+    border-left: 7px solid #9d795f;
+    background: #eee7dc;
+    font-size: clamp(18px, 2vw, 29px);
+    line-height: 1.5;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 25px;
+  }
+
+  .card {
+    background: #eee7dc;
+    border-radius: 16px;
+    padding: 24px;
+    min-height: 210px;
+  }
+
+  .card h3 {
+    margin: 0 0 12px;
+    color: #6e4f3a;
+    font-size: clamp(20px, 2.2vw, 30px);
+  }
+
+  .card p {
+    margin: 0;
+    font-size: clamp(15px, 1.5vw, 23px);
+    line-height: 1.55;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 36px;
+    align-items: center;
+  }
+
+  .big-number {
+    font-size: clamp(70px, 11vw, 140px);
+    font-weight: 900;
+    color: #9d795f;
+    line-height: 0.9;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    margin-top: 15px;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 125px 1fr;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .step .label {
+    font-weight: 800;
+    color: #6e4f3a;
+    font-size: clamp(16px, 1.5vw, 22px);
+  }
+
+  .step .text {
+    background: #eee7dc;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: clamp(15px, 1.5vw, 22px);
+  }
+
+  .footer {
+    position: absolute;
+    left: 7%;
+    bottom: 4%;
+    color: #806f63;
+    font-size: 14px;
+  }
+
+  .controls {
+    position: fixed;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+  }
+  button {
+    border: 0;
+    background: #493328;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  button:hover { background: #6e4f3a; }
+
+  .hint {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    color: #ddd;
+    font-size: 12px;
+    z-index: 20;
+  }
+
+  @media print {
+    body { background: white; overflow: visible; }
+    .deck { display: block; height: auto; }
+    .slide { display: block !important; width: 100vw; height: 56.25vw; page-break-after: always; }
+    .controls, .hint { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <section class="slide active">
+    <div class="top-line"></div>
+    <div style="position:absolute; left:7%; top:17%; width:18%; height:12px; background:#9d795f;"></div>
+    <h1 style="margin-top:16%;">「노새 두 마리」</h1>
+    <div class="subtitle">문학과 나의 삶 연결하여 연설하기</div>
+    <div style="margin-top:9%; font-size:clamp(16px,1.6vw,23px); color:#6e4f3a;">
+      변화하는 상황에서도<br>
+      내가 해오던 것을 쉽게 버리지 않는 태도
+    </div>
+    <div class="page">1</div>
+  </section>
+
+  <section class="slide">
+    <div class="top-line"></div>
+    <h2>1. 작품 속 ‘노새’는 무엇을 의미할까?</h2>
+    <div class="two-col">
+      <div>
+        <div class="content">
+          <p><span class="keyword">노새</span>는 단순히 연탄을 나르는 동물이 아니다.</p>
+          <p>가족을 위해 무거운 짐을 짊어지는 <span class="keyword">아버지와 평범한 사람들의 삶</span>을 보여 준다.</p>
+        </div>
+        <div class="quote">“내가 노새가 되어야지.”</div>
+      </div>
+      <div class="cards" style="display:flex; flex-direction:column; margin:0;">
+        <div class="card" style="min-height:auto;">
+          <h3>1970년대 서울</h3>
+          <p>연탄 배달 · 노새 마차 · 삼륜차 · 빠르게 변하는 도시</p>
+        </div>
+        <div class="card" style="min-height:auto;">
+          <h3>작품의 모습</h3>
+          <p>도시의 변화 속에서 기존의 삶을 이어 가는 사람들의 어려움</p>
+        </div>
+      </div>
+    </div>
+    <div class="page">2</div>
+  </section>
+
+  <section class="slide">
+    <div class="top-line"></div>
+    <h2>2. 내가 성찰한 삶의 가치</h2>
+    <div class="content" style="max-width:90%;">
+      <p style="font-size:clamp(24px,2.7vw,38px); font-weight:800; color:#6e4f3a;">
+        “변화하는 상황에서도<br>자신이 해오던 것을 쉽게 버리지 않는 태도”
+      </p>
+      <div class="timeline">
+        <div class="step">
+          <div class="label">아버지</div>
+          <div class="text">서울이 변하고 연탄 배달이 어려워져도 자신이 해오던 일을 쉽게 놓지 않는다.</div>
+        </div>
+        <div class="step">
+          <div class="label">인상 깊은 점</div>
+          <div class="text">노새가 사라진 뒤에도 자신이 그 역할을 대신하려는 모습에서 삶의 방식을 지키려는 마음이 드러난다.</div>
+        </div>
+        <div class="step">
+          <div class="label">나의 생각</div>
+          <div class="text">새로운 것을 받아들이는 것도 중요하지만, 지금까지 해온 것까지 무조건 버릴 필요는 없다.</div>
+        </div>
+      </div>
+    </div>
+    <div class="page">3</div>
+  </section>
+
+  <section class="slide">
+    <div class="top-line"></div>
+    <h2>3. 나의 경험과 연결</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>원래 하던 방법</h3>
+        <p>공부할 때 배운 내용을 <b>소리 내어 말하면서</b> 정리했다.</p>
+      </div>
+      <div class="card">
+        <h3>방법을 바꿔 봄</h3>
+        <p>말하는 것보다 <b>많이 써서 정리하는 것</b>이 더 효과적일 것 같았다.</p>
+      </div>
+      <div class="card">
+        <h3>다시 깨달음</h3>
+        <p>많이 쓰고 나니 이해한 내용을 확인하기 어려웠고, 결국 원래 방법이 나에게 더 잘 맞았다.</p>
+      </div>
+    </div>
+    <div class="quote" style="margin-top:32px;">
+      새로운 방법이 항상 더 좋은 것은 아니다.<br>
+      내가 오래 해온 방식에도 나에게 맞는 이유가 있었다.
+    </div>
+    <div class="page">4</div>
+  </section>
+
+  <section class="slide">
+    <div class="top-line"></div>
+    <h2>4. 작품을 읽고 얻은 생각</h2>
+    <div class="two-col">
+      <div>
+        <div class="big-number">01</div>
+        <div style="font-size:clamp(20px,2vw,30px); font-weight:800; color:#6e4f3a; margin-top:22px;">
+          변화는 받아들이되,<br>
+          중요한 것은 쉽게 버리지 않기
+        </div>
+      </div>
+      <div class="content">
+        <p>「노새 두 마리」는 단순히 노새가 사라진 이야기가 아니라, <span class="keyword">변화하는 세상 속에서 자신의 삶과 방식을 지켜 나가려는 사람들의 이야기</span>라고 생각한다.</p>
+        <p>나도 이 작품을 통해 새로운 것을 받아들이는 것과 함께, 내가 중요하게 생각하고 잘해 온 것을 지키는 것도 의미 있다는 생각을 하게 되었다.</p>
+      </div>
+    </div>
+    <div class="page">5</div>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button onclick="prevSlide()">← 이전</button>
+  <button onclick="nextSlide()">다음 →</button>
+</div>
+<div class="hint">← → 키로 이동 · F11 전체화면</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let idx = 0;
+
+  function showSlide(n) {
+    idx = (n + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+  }
+  function nextSlide() { showSlide(idx + 1); }
+  function prevSlide() { showSlide(idx - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+  });
+</script>
+</body>
+</html>
